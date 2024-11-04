@@ -4,7 +4,7 @@ cartpole_parameters
   cartMass     1.0
   poleMass     2.3
   poleLength   0.8
-  maxInput     50.0
+  maxInput     100.0
   gravity      -9.81
 }
 
