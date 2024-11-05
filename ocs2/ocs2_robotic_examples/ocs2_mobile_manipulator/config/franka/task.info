@@ -1,5 +1,6 @@
 ; robot model meta-information
-model_information {
+model_information
+{
   manipulatorModelType     0      // 0: Default-arm, 1: Wheel-based manipulator, 2: Floating-arm manipulator, 3: Fully actuated floating-arm manipulator
   
   ; motion joints in the URDF to consider fixed
@@ -67,9 +68,9 @@ rollout
   AbsTolODE                       1e-5
   RelTolODE                       1e-3
   timeStep                        1e-2
-  integratorType                  ODE45
   maxNumStepsPerSecond            100000
   checkNumericalStability         false
+  integratorType                  ODE45
 }
 
 ; MPC settings
@@ -199,6 +200,37 @@ finalEndEffector
   muPosition      50.0
   muOrientation   25.0
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 selfCollision
 { 

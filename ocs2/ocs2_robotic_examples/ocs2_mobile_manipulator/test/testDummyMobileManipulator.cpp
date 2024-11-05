@@ -1,40 +1,9 @@
-/******************************************************************************
-Copyright (c) 2020, Farbod Farshidian. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-
- * Redistributions of source code must retain the above copyright notice, this
-  list of conditions and the following disclaimer.
-
- * Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
-
- * Neither the name of the copyright holder nor the names of its
-  contributors may be used to endorse or promote products derived from
-  this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- ******************************************************************************/
-
 #include <cmath>
 #include <iostream>
 #include <string>
 #include <thread>
 #include <algorithm>
-
 #include <gtest/gtest.h>
-
 #include <ocs2_core/thread_support/ExecuteAndSleep.h>
 #include <ocs2_ddp/GaussNewtonDDP_MPC.h>
 #include <ocs2_mpc/MPC_MRT_Interface.h>
@@ -53,15 +22,10 @@ using namespace mobile_manipulator;
 using vector3_t = Eigen::Matrix<scalar_t, 3, 1>;
 using quaternion_t = Eigen::Quaternion<scalar_t, Eigen::DontAlign>;
 
-/**
- * @brief Test fixture for checking end-effector tracking using kinematic formulation for MPC.
- * 
- * @tparam A tuple containing the task file, library folder, URDF file, goal position and goal orientation.
- */
-class DummyMobileManipulatorParametersTests
-    : public testing::TestWithParam <std::tuple<std::string, std::string, std::string, vector3_t, quaternion_t>> {
+// Params: task file, library folder, URDF file, goal position and goal orientation
+class DummyMobileManipulatorParametersTests: public testing::TestWithParam <std::tuple<std::string, std::string, std::string, vector3_t, quaternion_t>> {
+
 protected:
-  
   // Constants
   static constexpr scalar_t tolerance = 1e-2;
   static constexpr scalar_t f_mpc = 10.0;
@@ -85,40 +49,34 @@ protected:
     return std::get<4>(GetParam());
   }
 
-  /**
-   * @note: We separate `initialize()` and `getMpc()` since one can obtain
-   * multiple MPC instances from same interface.
-   */
+  
+  // We separate `initialize()` and `getMpc()` since one can obtain multiple MPC instances from same interface
+  
   bool initialize(const std::string& taskFile, const std::string& libFolder, const std::string& urdfFile) {
-    // create mpc interface
-    mobileManipulatorInterfacePtr.reset(
-        new MobileManipulatorInterface(taskFile, libFolder, urdfFile));
-    // obtain robot model info
+    // initialize modelInfo
+    mobileManipulatorInterfacePtr.reset(new MobileManipulatorInterface(taskFile, libFolder, urdfFile));
     modelInfo = mobileManipulatorInterfacePtr->getManipulatorModelInfo();
 
-    // initialize reference
+    // initialize mobileManipulatorInterfacePtr
     const vector_t goalState = (vector_t(7) << getGoalPosition(), getGoalOrientation().coeffs()).finished();
     TargetTrajectories targetTrajectories({initTime}, {goalState}, {vector_t::Zero(modelInfo.inputDim)});
     mobileManipulatorInterfacePtr->getReferenceManagerPtr()->setTargetTrajectories(std::move(targetTrajectories));
 
-    // initialize kinematics
+    // initialize eeKinematicsPtr
     const std::string modelName = "end_effector_kinematics_dummytest";
     MobileManipulatorPinocchioMappingCppAd pinocchioMapping(modelInfo);
     const auto& pinocchioInterface = mobileManipulatorInterfacePtr->getPinocchioInterface();
     eeKinematicsPtr.reset(new PinocchioEndEffectorKinematicsCppAd(
-        pinocchioInterface, pinocchioMapping, {modelInfo.eeFrame},
-        modelInfo.stateDim, modelInfo.inputDim, modelName));
+                          pinocchioInterface, pinocchioMapping, {modelInfo.eeFrame},
+                          modelInfo.stateDim, modelInfo.inputDim, modelName));
     return true;
   }
 
   std::unique_ptr<GaussNewtonDDP_MPC> getMpc() {
     auto& interface = *mobileManipulatorInterfacePtr;
-    auto mpcPtr = std::make_unique<GaussNewtonDDP_MPC>(
-        interface.mpcSettings(), interface.ddpSettings(),
-        interface.getRollout(), interface.getOptimalControlProblem(),
-        interface.getInitializer());
-    mpcPtr->getSolverPtr()->setReferenceManager(
-        mobileManipulatorInterfacePtr->getReferenceManagerPtr());
+    auto mpcPtr = std::make_unique<GaussNewtonDDP_MPC>(interface.mpcSettings(), interface.ddpSettings(), interface.getRollout(),
+                                                       interface.getOptimalControlProblem(), interface.getInitializer());
+    mpcPtr->getSolverPtr()->setReferenceManager(mobileManipulatorInterfacePtr->getReferenceManagerPtr());
     return mpcPtr;
   }
 
@@ -154,11 +112,15 @@ protected:
   std::unique_ptr<PinocchioEndEffectorKinematicsCppAd> eeKinematicsPtr;
 };
 
+
 // expose constants globally
 constexpr scalar_t DummyMobileManipulatorParametersTests::tolerance;
 constexpr scalar_t DummyMobileManipulatorParametersTests::f_mpc;
 constexpr scalar_t DummyMobileManipulatorParametersTests::initTime;
 constexpr scalar_t DummyMobileManipulatorParametersTests::finalTime;
+
+
+
 
 TEST_P(DummyMobileManipulatorParametersTests, synchronousTracking) {
   // Obtain mpc
@@ -185,8 +147,7 @@ TEST_P(DummyMobileManipulatorParametersTests, synchronousTracking) {
       vector_t optimalState, optimalInput;
 
       mpcInterface.updatePolicy();
-      mpcInterface.evaluatePolicy(time, vector_t::Zero(modelInfo.stateDim),
-                                  optimalState, optimalInput, mode);
+      mpcInterface.evaluatePolicy(time, vector_t::Zero(modelInfo.stateDim), optimalState, optimalInput, mode);
 
       // use optimal state for the next observation:
       observation.time = time;
@@ -198,6 +159,9 @@ TEST_P(DummyMobileManipulatorParametersTests, synchronousTracking) {
 
   verifyTrackingQuality(observation.state);
 }
+
+
+
 
 #ifdef NDEBUG
 TEST_P(DummyMobileManipulatorParametersTests, asynchronousTracking) {
@@ -261,11 +225,10 @@ TEST_P(DummyMobileManipulatorParametersTests, asynchronousTracking) {
 }
 #endif
 
-/******************************************************************************************************/
-/******************************************************************************************************/
-/******************************************************************************************************/
-INSTANTIATE_TEST_CASE_P(
-    DummyMobileManipulatorTests, DummyMobileManipulatorParametersTests,
+
+
+
+INSTANTIATE_TEST_CASE_P(DummyMobileManipulatorTests, DummyMobileManipulatorParametersTests,
     testing::Values(
         // franka panda: 7-Dof arm
         std::make_tuple("franka/task.info", "franka", "franka/urdf/panda.urdf",

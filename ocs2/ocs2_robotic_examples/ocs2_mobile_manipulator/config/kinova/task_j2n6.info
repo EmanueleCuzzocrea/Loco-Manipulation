@@ -71,9 +71,9 @@ rollout
   AbsTolODE                       1e-5
   RelTolODE                       1e-3
   timeStep                        1e-2
-  integratorType                  ODE45
   maxNumStepsPerSecond            100000
   checkNumericalStability         false
+  integratorType                  ODE45
 }
 
 ; MPC settings
@@ -179,14 +179,12 @@ inputCost
     ; input costs for the arm DOFs
     arm
     {
-      scaling 1e-2
-
-      (0,0)  1.0  ; arm_1 velocity
-      (1,1)  1.0  ; arm_2 velocity
-      (2,2)  1.0  ; arm_3 velocity
-      (3,3)  1.0  ; arm_4 velocity
-      (4,4)  1.0  ; arm_5 velocity
-      (5,5)  1.0  ; arm_6 velocity
+      (0,0)  0.5  ; arm_1 velocity
+      (1,1)  0.5  ; arm_2 velocity
+      (2,2)  0.5  ; arm_3 velocity
+      (3,3)  0.5  ; arm_4 velocity
+      (4,4)  0.5  ; arm_5 velocity
+      (5,5)  0.5  ; arm_6 velocity
     }
   }
 }
@@ -194,14 +192,14 @@ inputCost
 endEffector
 {
   ; end effector quadratic penalty scaling
-  muPosition      10.0
-  muOrientation    5.0
+  muPosition      50.0
+  muOrientation   25.0
 }
 
 finalEndEffector
 {
-  muPosition      10.0
-  muOrientation    5.0
+  muPosition     100.0
+  muOrientation   50.0
 }
 
 selfCollision
@@ -266,12 +264,12 @@ jointVelocityLimits
     ; velocity limits for the arm DOFs
     arm
     {
-      (0,0)  -15.0     ; arm_1 [rad/s]
-      (1,0)  -15.0	   ; arm_2 [rad/s]
-      (2,0)  -15.0	   ; arm_3 [rad/s]
-      (3,0)  -15.0	   ; arm_4 [rad/s]
-      (4,0)  -15.0	   ; arm_5 [rad/s]
-      (5,0)  -15.0	   ; arm_6 [rad/s]
+      (0,0)  -5.0     ; arm_1 [rad/s]
+      (1,0)  -5.0	   ; arm_2 [rad/s]
+      (2,0)  -5.0	   ; arm_3 [rad/s]
+      (3,0)  -5.0	   ; arm_4 [rad/s]
+      (4,0)  -5.0	   ; arm_5 [rad/s]
+      (5,0)  -5.0	   ; arm_6 [rad/s]
     }
   }
 
@@ -308,12 +306,12 @@ jointVelocityLimits
     ; velocity limits for the arm DOFs
     arm
     {
-      (0,0)  15.0    ; arm_1 [rad/s]
-      (1,0)  15.0	   ; arm_2 [rad/s]
-      (2,0)  15.0	   ; arm_3 [rad/s]
-      (3,0)  15.0	   ; arm_4 [rad/s]
-      (4,0)  15.0	   ; arm_5 [rad/s]
-      (5,0)  15.0	   ; arm_6 [rad/s]
+      (0,0)  5.0    ; arm_1 [rad/s]
+      (1,0)  5.0	   ; arm_2 [rad/s]
+      (2,0)  5.0	   ; arm_3 [rad/s]
+      (3,0)  5.0	   ; arm_4 [rad/s]
+      (4,0)  5.0	   ; arm_5 [rad/s]
+      (5,0)  5.0	   ; arm_6 [rad/s]
     }
   }
 }

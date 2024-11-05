@@ -5,9 +5,11 @@ project(ocs2_mobile_manipulator)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(CATKIN_PACKAGE_DEPENDENCIES
+  pybind11_catkin
   ocs2_core
   ocs2_ddp
   ocs2_mpc
+  ocs2_python_interface
   ocs2_robotic_tools
   ocs2_robotic_assets
   ocs2_pinocchio_interface
@@ -98,6 +100,24 @@ target_link_libraries(${PROJECT_NAME}
 )
 target_compile_options(${PROJECT_NAME} PUBLIC ${FLAGS})
 
+# python bindings
+pybind11_add_module(MobileManipulatorPyBindings SHARED
+  src/pyBindModule.cpp
+)
+add_dependencies(MobileManipulatorPyBindings
+  ${PROJECT_NAME}
+  ${catkin_EXPORTED_TARGETS}
+)
+target_link_libraries(MobileManipulatorPyBindings PRIVATE
+  ${PROJECT_NAME}
+  ${catkin_LIBRARIES}
+)
+set_target_properties(MobileManipulatorPyBindings
+    PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION}
+)
+
+catkin_python_setup()
+
 ####################
 ## Clang tooling ###
 ####################
@@ -127,6 +147,10 @@ install(DIRECTORY include/${PROJECT_NAME}/
 )
 install(DIRECTORY config
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+install(TARGETS MobileManipulatorPyBindings
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
 )
 
 #############
