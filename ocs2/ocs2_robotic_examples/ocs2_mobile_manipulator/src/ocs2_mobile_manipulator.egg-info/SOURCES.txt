@@ -28,6 +28,7 @@ src/FactoryFunctions.cpp
 src/MobileManipulatorInterface.cpp
 src/MobileManipulatorPinocchioMapping.cpp
 src/MobileManipulatorPreComputation.cpp
+src/MobileManipulatorPyBindingTest.py
 src/pyBindModule.cpp
 src/constraint/EndEffectorConstraint.cpp
 src/dynamics/DefaultManipulatorDynamics.cpp
