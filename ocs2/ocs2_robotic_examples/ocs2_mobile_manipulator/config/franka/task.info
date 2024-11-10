@@ -294,10 +294,10 @@ jointVelocityLimits
 
       fullyActuatedFloatingArmManipulator
       {
-        (0,0)  -1  ; linear velocity x
-        (1,0)  -1  ; linear velocity y
+        (0,0)  -0.8  ; linear velocity x
+        (1,0)  -0.8  ; linear velocity y
         (2,0)  -0.1  ; linear velocity z
-        (3,0)  -1  ; euler angle velocity z
+        (3,0)  -0.8  ; euler angle velocity z
         (4,0)  -0.3  ; euler angle velocity y
         (5,0)  -0.3  ; euler angle velocity x
       }
@@ -337,10 +337,10 @@ jointVelocityLimits
 
       fullyActuatedFloatingArmManipulator
       {
-        (0,0)  1  ; linear velocity x
-        (1,0)  1  ; linear velocity y
+        (0,0)  0.8  ; linear velocity x
+        (1,0)  0.8  ; linear velocity y
         (2,0)  0.1  ; linear velocity z
-        (3,0)  1  ; euler angle velocity z
+        (3,0)  0.8  ; euler angle velocity z
         (4,0)  0.3  ; euler angle velocity y
         (5,0)  0.3  ; euler angle velocity x
       }
