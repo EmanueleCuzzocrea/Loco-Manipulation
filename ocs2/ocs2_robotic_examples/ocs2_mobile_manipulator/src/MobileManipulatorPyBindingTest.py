@@ -11,7 +11,7 @@ from ocs2_mobile_manipulator import (
 
 def compute_mpc_control(mpc, current_state):
     # Set MPC observations
-    u = np.zeros(15)
+    u = np.zeros(12)
     mpc.setObservation(0.0, current_state, u)
 
     # Optimization problem
