@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="stick">
+  <link name="stick">
+  </link>
+
+  <joint name="interaction_joint" type="revolute">
+    <parent link="stick"/>
+    <child link="interaction"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="100" velocity="100" lower="-1000" upper="1000"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+  
+  <link name="interaction">
+  </link>
+</robot>
