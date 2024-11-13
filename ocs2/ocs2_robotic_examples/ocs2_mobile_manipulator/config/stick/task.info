@@ -4,7 +4,6 @@ model_information {
   
   ; motion joints in the URDF to consider fixed
   removeJoints {
-    [0] "interaction_joint"
   }
 
   ; base frame of the robot (from URDF)
@@ -126,11 +125,6 @@ initialState
   arm
   {
     (0,0)   0.0     ; arm_1
-    (1,0)   2.76    ; arm_2
-    (2,0)   2.76    ; arm_3
-    (3,0)   2.5     ; arm_4
-    (4,0)   2.0     ; arm_5
-    (5,0)   0.0     ; arm_6
   }
 }
 
@@ -264,8 +258,8 @@ jointVelocityLimits
       fullyActuatedFloatingArmManipulator
       {
         (0,0)  -0.5  ; linear velocity x
-        (1,0)  -0.5  ; linear velocity y
-        (2,0)  -0.1  ; linear velocity z
+        (1,0)  -0.5 ; linear velocity y
+        (2,0)  -0.3  ; linear velocity z
         (3,0)  -0.5  ; euler angle velocity z
         (4,0)  -0.3  ; euler angle velocity y
         (5,0)  -0.3  ; euler angle velocity x
@@ -281,12 +275,7 @@ jointVelocityLimits
     ; velocity limits for the arm DOFs
     arm
     {
-      (0,0)  -2.0    ; arm_1 [rad/s]
-      (1,0)  -2.0	   ; arm_2 [rad/s]
-      (2,0)  -2.0	   ; arm_3 [rad/s]
-      (3,0)  -2.0	   ; arm_4 [rad/s]
-      (4,0)  -2.0	   ; arm_5 [rad/s]
-      (5,0)  -2.0	   ; arm_6 [rad/s]
+      (0,0)  -1.0    ; arm_1 [rad/s]
     }
   }
 
@@ -305,9 +294,9 @@ jointVelocityLimits
 
       fullyActuatedFloatingArmManipulator
       {
-        (0,0)  0.5  ; linear velocity x
+        (0,0)  0.5 ; linear velocity x
         (1,0)  0.5  ; linear velocity y
-        (2,0)  0.1  ; linear velocity z
+        (2,0)  0.3  ; linear velocity z
         (3,0)  0.5  ; euler angle velocity z
         (4,0)  0.3  ; euler angle velocity y
         (5,0)  0.3  ; euler angle velocity x
@@ -323,12 +312,7 @@ jointVelocityLimits
     ; velocity limits for the arm DOFs
     arm
     {
-      (0,0)  2.0    ; arm_1 [rad/s]
-      (1,0)  2.0	   ; arm_2 [rad/s]
-      (2,0)  2.0	   ; arm_3 [rad/s]
-      (3,0)  2.0	   ; arm_4 [rad/s]
-      (4,0)  2.0	   ; arm_5 [rad/s]
-      (5,0)  2.0	   ; arm_6 [rad/s]
+      (0,0)  1.0    ; arm_1 [rad/s]
     }
   }
 }

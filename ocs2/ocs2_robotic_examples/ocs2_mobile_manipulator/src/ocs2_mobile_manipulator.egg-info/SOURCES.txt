@@ -8,6 +8,7 @@ config/kinova/task_j2n7.info
 config/mabi_mobile/task.info
 config/pr2/task.info
 config/ridgeback_ur5/task.info
+config/stick/task.info
 include/ocs2_mobile_manipulator/AccessHelperFunctions.h
 include/ocs2_mobile_manipulator/FactoryFunctions.h
 include/ocs2_mobile_manipulator/ManipulatorModelInfo.h

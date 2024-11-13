@@ -163,8 +163,7 @@ inputCost
 
       wheelBasedMobileManipulator
       {
-        scaling 1e-2
-
+        scaling 1e+1
         (0,0)  5.0  ; forward velocity
         (1,1)  5.0  ; turning velocity
       }
@@ -186,14 +185,14 @@ inputCost
 endEffector
 {
   ; end effector quadratic penalty scaling
-  muPosition      50.0
-  muOrientation   25.0
+  muPosition      100.0
+  muOrientation   100.0
 }
 
 finalEndEffector
 {
-  muPosition     100.0
-  muOrientation   50.0
+  muPosition     200.0
+  muOrientation  200.0
 }
 
 
@@ -265,7 +264,7 @@ jointVelocityLimits
       {
         (0,0)  -0.5  ; linear velocity x
         (1,0)  -0.5  ; linear velocity y
-        (2,0)  -0.1  ; linear velocity z
+        (2,0)  -0.3  ; linear velocity z
         (3,0)  -0.5  ; euler angle velocity z
         (4,0)  -0.3  ; euler angle velocity y
         (5,0)  -0.3  ; euler angle velocity x
@@ -273,8 +272,8 @@ jointVelocityLimits
 
       wheelBasedMobileManipulator
       {
-        (0,0)  -0.1 ; forward velocity
-        (1,0)  -0.3 ; turning velocity
+        (0,0)  -0.5 ; forward velocity
+        (1,0)  -0.5 ; turning velocity
       }
     }
 
@@ -307,7 +306,7 @@ jointVelocityLimits
       {
         (0,0)  0.5  ; linear velocity x
         (1,0)  0.5  ; linear velocity y
-        (2,0)  0.1  ; linear velocity z
+        (2,0)  0.3  ; linear velocity z
         (3,0)  0.5  ; euler angle velocity z
         (4,0)  0.3  ; euler angle velocity y
         (5,0)  0.3  ; euler angle velocity x
@@ -315,8 +314,8 @@ jointVelocityLimits
 
       wheelBasedMobileManipulator
       {
-        (0,0)  0.1 ; forward velocity
-        (1,0)  0.3 ; turning velocity
+        (0,0)  0.5 ; forward velocity
+        (1,0)  0.5 ; turning velocity
       }
     }
 
