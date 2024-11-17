@@ -180,14 +180,14 @@ inputCost
 endEffector
 {
   ; end effector quadratic penalty scaling
-  muPosition      100.0
-  muOrientation   100.0
+  muPosition      50.0
+  muOrientation   50.0
 }
 
 finalEndEffector
 {
-  muPosition     200.0
-  muOrientation  200.0
+  muPosition     100.0
+  muOrientation  100.0
 }
 
 
@@ -257,10 +257,10 @@ jointVelocityLimits
 
       fullyActuatedFloatingArmManipulator
       {
-        (0,0)  -0.5  ; linear velocity x
-        (1,0)  -0.5 ; linear velocity y
+        (0,0)  -0.3  ; linear velocity x
+        (1,0)  -0.3 ; linear velocity y
         (2,0)  -0.3  ; linear velocity z
-        (3,0)  -0.5  ; euler angle velocity z
+        (3,0)  -0.3  ; euler angle velocity z
         (4,0)  -0.3  ; euler angle velocity y
         (5,0)  -0.3  ; euler angle velocity x
       }
@@ -294,10 +294,10 @@ jointVelocityLimits
 
       fullyActuatedFloatingArmManipulator
       {
-        (0,0)  0.5 ; linear velocity x
-        (1,0)  0.5  ; linear velocity y
+        (0,0)  0.3 ; linear velocity x
+        (1,0)  0.3  ; linear velocity y
         (2,0)  0.3  ; linear velocity z
-        (3,0)  0.5  ; euler angle velocity z
+        (3,0)  0.3  ; euler angle velocity z
         (4,0)  0.3  ; euler angle velocity y
         (5,0)  0.3  ; euler angle velocity x
       }
