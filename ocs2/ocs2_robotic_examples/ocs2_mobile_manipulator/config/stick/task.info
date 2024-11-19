@@ -180,14 +180,14 @@ inputCost
 endEffector
 {
   ; end effector quadratic penalty scaling
-  muPosition      50.0
-  muOrientation   50.0
+  muPosition      200.0
+  muOrientation   200.0
 }
 
 finalEndEffector
 {
-  muPosition     100.0
-  muOrientation  100.0
+  muPosition     1000.0
+  muOrientation  1000.0
 }
 
 
